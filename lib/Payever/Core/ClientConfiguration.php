@@ -324,8 +324,11 @@ class ClientConfiguration implements ClientConfigurationInterface
      */
     public function setLogger(LoggerInterface $logger)
     {
-        $clientConfiguration = clone $this;
-        $this->logger = new ApmLogger($logger, $clientConfiguration);
+        $this->logger = $logger;
+        if ($this->getLogDiagnostic()) {
+            $clientConfiguration = clone $this;
+            $this->logger = new ApmLogger($logger, $clientConfiguration);
+        }
 
         return $this;
     }
