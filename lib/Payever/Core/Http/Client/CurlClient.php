@@ -156,6 +156,9 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
         ) {
             $options[CURLOPT_POSTFIELDS] = json_encode($options[CURLOPT_POSTFIELDS]);
         }
+        if ($request->getHeader('Content-Type') == 'application/x-ndjson') {
+            $options[CURLOPT_POSTFIELDS] = $this->encodeNdJson($options[CURLOPT_POSTFIELDS]);
+        }
 
         curl_setopt_array($ch, $this->getRequestOptions($options));
 
@@ -314,5 +317,20 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
         ];
 
         return $override + $default;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    protected function encodeNdJson(array $data)
+    {
+        $result = [];
+        foreach ($data as $key => $item) {
+            $item = [$key => $item];
+            $result[] = json_encode($item);
+        }
+
+        return implode(PHP_EOL, $result);
     }
 }

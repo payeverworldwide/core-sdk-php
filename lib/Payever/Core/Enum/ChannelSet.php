@@ -42,4 +42,5 @@ class ChannelSet extends EnumerableConstants
     const CHANNEL_OVERLAY_BANNER   = 'overlay_banner';
     const CHANNEL_DANDOMAIN        = 'dandomain';
     const CHANNEL_FINANCE_EXPRESS  = 'finance_express';
+    const CHANNEL_OPENCART         = 'opencart';
 }

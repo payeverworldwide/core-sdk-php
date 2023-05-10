@@ -308,6 +308,7 @@ class Request implements RequestInterface
         if (
             $this->getHeader('Content-Type') == 'application/x-www-form-urlencoded'
             || $this->getHeader('Content-Type') == 'application/json'
+            || $this->getHeader('Content-Type') == 'application/x-ndjson'
         ) {
             return $array;
         }

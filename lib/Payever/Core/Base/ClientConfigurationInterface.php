@@ -59,6 +59,11 @@ interface ClientConfigurationInterface
     public function getApiVersion();
 
     /**
+     * @return string
+     */
+    public function getPluginVersion();
+
+    /**
      * Returns Channel Set
      *
      * @return string

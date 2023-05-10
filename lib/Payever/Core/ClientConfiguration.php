@@ -20,6 +20,9 @@ use Payever\Sdk\Core\Enum\ChannelSet;
 use Payever\Sdk\Core\Exception\ConfigurationException;
 use Payever\Sdk\Core\Logger\NullLogger;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+use Payever\Sdk\Core\Logger\ApmLogger;
+use Payever\Sdk\Core\Authorization\ApmSecretService;
 
 /**
  * @SuppressWarnings(PHPMD.StaticAccess)
@@ -53,6 +56,15 @@ class ClientConfiguration implements ClientConfigurationInterface
     /** @var string */
     protected $apiVersion = self::API_VERSION_DEFAULT;
 
+    /** @var string */
+    protected $pluginVersion = '';
+
+    /** @var bool $logDiagnostic */
+    protected $logDiagnostic = false;
+
+    /** @var null|ApmSecretService $apmSecretService */
+    protected $apmSecretService;
+
     /**
      * @param string|null $clientId
      * @param string|null $clientSecret
@@ -66,6 +78,25 @@ class ClientConfiguration implements ClientConfigurationInterface
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->businessUuid = $businessUuid;
+    }
+
+    /**
+     * @param ApmSecretService $apmSecretService
+     * @return $this
+     */
+    public function setApmSecretService(ApmSecretService $apmSecretService)
+    {
+        $this->apmSecretService = $apmSecretService;
+
+        return $this;
+    }
+
+    /**
+     * @return ApmSecretService
+     */
+    public function getApmSecretService()
+    {
+        return $this->apmSecretService ? : new ApmSecretService();
     }
 
     /**
@@ -106,6 +137,14 @@ class ClientConfiguration implements ClientConfigurationInterface
     public function getApiVersion()
     {
         return $this->apiVersion;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPluginVersion()
+    {
+        return $this->pluginVersion;
     }
 
     /**
@@ -217,6 +256,17 @@ class ClientConfiguration implements ClientConfigurationInterface
     }
 
     /**
+     * @param string $pluginVersion
+     * @return self
+     */
+    public function setPluginVersion($pluginVersion)
+    {
+        $this->pluginVersion = $pluginVersion;
+
+        return $this;
+    }
+
+    /**
      * Sets Channel set
      *
      * @param mixed $channelSet
@@ -274,7 +324,8 @@ class ClientConfiguration implements ClientConfigurationInterface
      */
     public function setLogger(LoggerInterface $logger)
     {
-        $this->logger = $logger;
+        $clientConfiguration = clone $this;
+        $this->logger = new ApmLogger($logger, $clientConfiguration);
 
         return $this;
     }
@@ -301,5 +352,24 @@ class ClientConfiguration implements ClientConfigurationInterface
                 'Payever API client credentials (client_id, client_secret, business_uuid) are not set.'
             );
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLogDiagnostic()
+    {
+        return $this->logDiagnostic;
+    }
+
+    /**
+     * @param $logDiagnostic
+     * @return $this
+     */
+    public function setLogDiagnostic($logDiagnostic)
+    {
+        $this->logDiagnostic = $logDiagnostic;
+
+        return $this;
     }
 }
