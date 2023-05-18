@@ -23,14 +23,14 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
 class HeadersEntity extends ApmRequestEntity
 {
     /** @var string $cookie */
-    protected $cookie;
+    protected $cookie = '';
 
     /**
      * @param array $data
      */
     public function __construct($data = [])
     {
-        if (!isset($data['cookie'])) {
+        if (!isset($data['cookie']) && function_exists('getallheaders')) {
             $headers = getallheaders();
             $data['cookie'] = isset($headers['Cookie']) ? $headers['Cookie'] : '';
         }

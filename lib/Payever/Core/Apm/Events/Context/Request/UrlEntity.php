@@ -64,7 +64,7 @@ class UrlEntity extends ApmRequestEntity
         }
 
         if (!isset($data['port'])) {
-            $data['port'] = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : '';
+            $data['port'] = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 0;
         }
 
         if (!isset($data['pathname'])) {
