@@ -5,12 +5,13 @@ namespace Payever\Sdk\Core\Logger;
 use Payever\Sdk\Core\Apm\ApmApiClient;
 use Payever\Sdk\Core\ClientConfiguration;
 use Psr\Log\LoggerInterface;
+use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 
 /**
  * Class ApmLogger
  */
-class ApmLogger implements LoggerInterface
+class ApmLogger extends AbstractLogger
 {
     /** @var LoggerInterface  */
     protected $logger;

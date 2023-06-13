@@ -18,7 +18,7 @@ use Payever\Sdk\Core\Http\RequestBuilder;
 use Payever\Sdk\Core\Http\RequestEntity\ApmSecretRequest;
 use Payever\Sdk\Core\Http\RequestEntity\ApmEventsRequest;
 use Payever\Sdk\Core\Http\ResponseEntity\AmpSecretResponse;
-use Payever\Sdk\Core\Logger\NullLogger;
+use Psr\Log\NullLogger;
 use Psr\Log\LoggerAwareInterface;
 
 /**

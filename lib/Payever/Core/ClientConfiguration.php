@@ -18,7 +18,7 @@ namespace Payever\Sdk\Core;
 use Payever\Sdk\Core\Base\ClientConfigurationInterface;
 use Payever\Sdk\Core\Enum\ChannelSet;
 use Payever\Sdk\Core\Exception\ConfigurationException;
-use Payever\Sdk\Core\Logger\NullLogger;
+use Psr\Log\NullLogger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Payever\Sdk\Core\Logger\ApmLogger;

@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.3]
+### Bugfixes
+- Psr\Log: compatibility issue;
+
 ## [1.1.2]
 ### Bugfixes
 - php-cli: function getallheaders not exist;
