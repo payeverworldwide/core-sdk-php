@@ -21,7 +21,7 @@ use Payever\Sdk\Core\Exception\ConfigurationException;
 use Psr\Log\NullLogger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Payever\Sdk\Core\Logger\ApmLogger;
+use Payever\Sdk\Core\Apm\Logger\ApmLogger;
 use Payever\Sdk\Core\Authorization\ApmSecretService;
 
 /**
