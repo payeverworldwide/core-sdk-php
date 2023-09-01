@@ -1,4 +1,12 @@
-# Changelog
+# Changelo
+
+## [1.1.5]
+### Added
+- Added `ChannelTypeSet` class
+
+### Changed
+- OroCommerce value in `ChannelSet` class
+- Check result of `json_encode`
 
 ## [1.1.4]
 ### Bugfixes

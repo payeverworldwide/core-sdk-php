@@ -53,10 +53,19 @@ abstract class MessageEntity implements MessageEntityInterface, \ArrayAccess
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function toString()
     {
-        return json_encode($this->toArray());
+        $result = json_encode($this->toArray());
+
+        if (JSON_ERROR_NONE !== json_last_error()) {
+            $error = function_exists('json_last_error_msg') ? json_last_error_msg() : json_last_error();
+
+            throw new \Exception('Json serialization error: ' . $error);
+        }
+
+        return $result;
     }
 
     /**
