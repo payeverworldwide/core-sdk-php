@@ -17,10 +17,10 @@ namespace Payever\Sdk\Core;
 
 // @codeCoverageIgnoreStart
 // phpcs:disable PSR1.Files.SideEffects
-define('PEI_CORE_VERSION', '1.1.5');
+define('PEI_CORE_VERSION', '1.1.6');
 define('PEI_CORE_MAJOR_VERSION', 1);
 define('PEI_CORE_MINOR_VERSION', 1);
-define('PEI_CORE_RELEASE_VERSION', 5);
+define('PEI_CORE_RELEASE_VERSION', 6);
 
 define('PEI_NAMESPACE', 'Payever\Sdk\Core');
 

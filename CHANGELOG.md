@@ -1,5 +1,9 @@
 # Changelo
 
+## [1.1.6]
+### Added
+- Added `CHANNEL_OROCOMMERCE` const
+
 ## [1.1.5]
 ### Added
 - Added `ChannelTypeSet` class

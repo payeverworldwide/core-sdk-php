@@ -43,5 +43,5 @@ class ChannelSet extends EnumerableConstants
     const CHANNEL_DANDOMAIN        = 'dandomain';
     const CHANNEL_FINANCE_EXPRESS  = 'finance_express';
     const CHANNEL_OPENCART         = 'opencart';
-    const CHANNEL_OROCOMMERCE      = 'orocommerce';
+    const CHANNEL_OROCOMMERCE      = 'oro_commerce';
 }
