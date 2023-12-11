@@ -1,5 +1,9 @@
 # Changelo
 
+## [1.1.7]
+### Bugfixes
+- Psr\Log: compatibility issue v1.*
+
 ## [1.1.6]
 ### Added
 - Added `CHANNEL_OROCOMMERCE` const

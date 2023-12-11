@@ -23,7 +23,7 @@ if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
          * @param array $context
          * @return void
          */
-        public function log($level, string|\Stringable $message, array $context = []): void
+        public function log($level, $message, array $context = []): void
         {
             $this->sendMessage($message, $level);
             $this->logger->log($level, $message, $context);
