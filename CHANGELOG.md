@@ -1,4 +1,8 @@
 # Changelo
+## [1.2.0]
+### Added
+- Added `x-payever-force-retry` header
+- Added `idempotency-key` header
 
 ## [1.1.7]
 ### Bugfixes

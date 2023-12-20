@@ -22,6 +22,9 @@ use Payever\Sdk\Core\Engine;
  */
 class RequestBuilder
 {
+    const IDEMPOTENCY_HEADER = 'idempotency-key';
+    const FORCE_RETRY_HEADER = 'x-payever-force-retry';
+
     /** @var null|string $url */
     protected $url;
 
@@ -501,5 +504,31 @@ class RequestBuilder
         return [
             'User-agent' => sprintf('payever PHP SDK v%s / cURL client', Engine::SDK_VERSION),
         ];
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function addIdempotencyHeader($value)
+    {
+        if (!empty($value)) {
+            $this->addHeader(self::IDEMPOTENCY_HEADER, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function addForceRetryHeader($value)
+    {
+        if (!empty($value)) {
+            $this->addHeader(self::FORCE_RETRY_HEADER, $value);
+        }
+
+        return $this;
     }
 }
