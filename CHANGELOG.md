@@ -1,4 +1,8 @@
 # Changelo
+## [1.2.1]
+### Bugfixes
+- Psr\Log: php 5.6 compatibility issue ;
+
 ## [1.2.0]
 ### Added
 - Added `x-payever-force-retry` header
