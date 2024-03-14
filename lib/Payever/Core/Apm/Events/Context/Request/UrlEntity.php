@@ -52,6 +52,9 @@ class UrlEntity extends ApmRequestEntity
 
     /**
      * @param array $data
+     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function __construct($data = [])
     {
@@ -84,6 +87,7 @@ class UrlEntity extends ApmRequestEntity
 
     /**
      * @return string
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function getFullRequestUri()
     {

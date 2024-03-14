@@ -17,8 +17,10 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
 
 /**
  * Class SocketEntity
+ * @todo Change properties to be the camel case style
  * @method bool getEncrypted()
  * @method self setEncrypted(bool $encrypted)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class SocketEntity extends ApmRequestEntity
 {
@@ -30,6 +32,7 @@ class SocketEntity extends ApmRequestEntity
 
     /**
      * @param array $data
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct($data = [])
     {
