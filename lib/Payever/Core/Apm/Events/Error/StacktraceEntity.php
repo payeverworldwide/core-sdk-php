@@ -17,6 +17,7 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
 
 /**
  * Class Stacktrace
+ * @todo Change properties to be the camel case style
  * @method null|string getFunction()
  * @method null|string getLineno()
  * @method null|string getFilename()
@@ -28,6 +29,7 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
  * @method self setType(string $type)
  * @method self setFilename(string $filename)
  * @package Payever\Sdk\Core\Apm\Events\Error
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class StacktraceEntity extends ApmRequestEntity
 {

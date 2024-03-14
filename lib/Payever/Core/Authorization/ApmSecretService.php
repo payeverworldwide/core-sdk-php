@@ -29,6 +29,7 @@ class ApmSecretService
     /**
      * @param string $apmSecret
      * @return self
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function save($apmSecret)
     {

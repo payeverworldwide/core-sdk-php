@@ -20,11 +20,13 @@ use Payever\Sdk\Core\Apm\Events\Context\Request\UrlEntity;
 
 /**
  * Class RequestEntity
+ * @todo Change properties to be the camel case style
  * @method string getMethod()
  * @method SocketEntity getSocket()
  * @method UrlEntity getUrl()
  * @method HeadersEntity getHeaders()
  * @method self setMethod(string $method)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class ContextRequestEntity extends ApmRequestEntity
 {
@@ -47,6 +49,7 @@ class ContextRequestEntity extends ApmRequestEntity
 
     /**
      * @param array $data
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct($data = [])
     {
@@ -127,6 +130,8 @@ class ContextRequestEntity extends ApmRequestEntity
 
     /**
      * @return false|string|null
+     * @SuppressWarnings(PHPMD.Superglobals)
+     * @SuppressWarnings(PHPMD.CamelCaseVariableName)
      */
     private function getProtocolVersion()
     {

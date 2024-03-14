@@ -1,7 +1,23 @@
-# Changelo
+# Changelog
+
+## [2.0.0]
+### Added
+- `ApmProcessor` for apm logging using Monolog
+
+### Removed
+- Removed `ApmLogger`, `FileLogger`, `NullLogger`
+- Removed `psr/log` dependency
+
+### Changed
+- `ClientConfiguration::setLogger`: apply ApmProcessor if have the Monolog logger
+
+## [1.2.2]
+### Bugfixes
+- Use CURL_HTTP_VERSION_1_1 constant as default http version;
+
 ## [1.2.1]
 ### Bugfixes
-- Psr\Log: php 5.6 compatibility issue ;
+- Psr\Log: php 5.6 compatibility issue;
 
 ## [1.2.0]
 ### Added
