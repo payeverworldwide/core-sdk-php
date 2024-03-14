@@ -18,7 +18,6 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
 
 /**
  * Class Transaction
- * @todo Change properties to be the camel case style
  * @method null|string getId()
  * @method null|int getTimestamp()
  * @method null|string getName()
@@ -29,8 +28,6 @@ use Payever\Sdk\Core\Http\ApmRequestEntity;
  * @method self setName(string $name)
  * @method self setDuration(int $duration)
  * @method self setType(string $type)
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Transaction extends ApmRequestEntity
 {

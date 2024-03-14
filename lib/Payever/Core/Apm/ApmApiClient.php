@@ -2,7 +2,6 @@
 
 namespace Payever\Sdk\Core\Apm;
 
-use Exception;
 use Payever\Sdk\Core\Apm\Events\Error\StacktraceEntity;
 use Payever\Sdk\Core\Authorization\OauthToken;
 use Payever\Sdk\Core\CommonApiClient;
@@ -24,8 +23,6 @@ use Psr\Log\LoggerAwareInterface;
 
 /**
  * Class ApmApiClient
- * @SuppressWarnings(PHPMD.MissingImport)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ApmApiClient extends CommonApiClient
 {
@@ -58,15 +55,9 @@ class ApmApiClient extends CommonApiClient
      */
     public function sendLog($message, $logLevel)
     {
-        if (!$this->configuration->getLogDiagnostic()) {
+        if (!$this->configuration->getLogDiagnostic() || $this->getApmSecret() == '') {
             return false;
         }
-
-        $apmSecret = $this->getApmSecret();
-        if (empty($apmSecret)) {
-            return false;
-        }
-
         $apmRequestEntity = new ApmEventsRequest();
 
         //build and set metadata event
@@ -90,7 +81,7 @@ class ApmApiClient extends CommonApiClient
         $request = $builder
             ->setRequestEntity($apmRequestEntity)
             ->addHeader('User-Agent', ApmAgent::NAME)
-            ->addRawHeader(sprintf("Authorization: Bearer %s", $apmSecret))
+            ->addRawHeader(sprintf("Authorization: Bearer %s", $this->getApmSecret()))
             ->addHeader('Content-Type', 'application/x-ndjson')
             ->build();
 
@@ -116,9 +107,7 @@ class ApmApiClient extends CommonApiClient
     public function getTimestamp()
     {
         return (int) sprintf(
-            '%.0f',
-            floor(microtime(true) * ApmAgent::MICROTIME_MULTIPLIER)
-        );
+            "%.0f", floor(microtime(true) * ApmAgent::MICROTIME_MULTIPLIER));
     }
 
     /**
@@ -130,8 +119,8 @@ class ApmApiClient extends CommonApiClient
     protected function mockException($message)
     {
         try {
-            throw new Exception($message);
-        } catch (Exception $e) {
+            throw new \Exception($message);
+        } catch (\Exception $e) {
             return $e;
         }
     }
@@ -148,7 +137,7 @@ class ApmApiClient extends CommonApiClient
             $response = $this->getHttpClient()->execute($request);
 
             return $response->isSuccessful();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -187,7 +176,7 @@ class ApmApiClient extends CommonApiClient
         }
 
         if ($this->httpClient instanceof LoggerAwareInterface) {
-            $this->httpClient->setLogger(new NullLogger());
+            $this->httpClient->setLogger(new NullLogger);
         }
 
         return $this->httpClient;

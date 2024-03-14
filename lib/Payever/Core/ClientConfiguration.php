@@ -15,16 +15,13 @@
 
 namespace Payever\Sdk\Core;
 
-use Exception;
-use Payever\Sdk\Core\Apm\Logger\Monolog\ApmProcessor;
-use Payever\Sdk\Core\Apm\Logger\Monolog\ApmProcessorV3;
 use Payever\Sdk\Core\Base\ClientConfigurationInterface;
 use Payever\Sdk\Core\Enum\ChannelSet;
 use Payever\Sdk\Core\Exception\ConfigurationException;
-use Payever\Sdk\Logger\ApmLogger;
 use Psr\Log\NullLogger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Payever\Sdk\Core\Apm\Logger\ApmLogger;
 use Payever\Sdk\Core\Authorization\ApmSecretService;
 
 /**
@@ -276,7 +273,7 @@ class ClientConfiguration implements ClientConfigurationInterface
      *
      * @return $this
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function setChannelSet($channelSet = null)
     {
@@ -324,30 +321,13 @@ class ClientConfiguration implements ClientConfigurationInterface
      * @param LoggerInterface $logger
      *
      * @return $this
-     * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
-
         if ($this->getLogDiagnostic()) {
             $clientConfiguration = clone $this;
-
-            // Configure Processor for Apm data collection
-            if (is_a($logger, '\Monolog\Logger')) {
-                /** @var \Monolog\Logger $logger */
-                $this->logger->pushProcessor(
-                    $this->isApiMonologV3() ? new ApmProcessorV3($clientConfiguration) :
-                        new ApmProcessor($clientConfiguration)
-                );
-
-                return $this;
-            }
-
-            // Override Logger
-            if (class_exists('\Payever\Sdk\Logger\ApmLogger') && !is_a($logger, ApmLogger::class)) {
-                $this->logger = new ApmLogger($logger, $clientConfiguration);
-            }
+            $this->logger = new ApmLogger($logger, $clientConfiguration);
         }
 
         return $this;
@@ -379,7 +359,6 @@ class ClientConfiguration implements ClientConfigurationInterface
 
     /**
      * @return bool
-     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
     public function getLogDiagnostic()
     {
@@ -395,15 +374,5 @@ class ClientConfiguration implements ClientConfigurationInterface
         $this->logDiagnostic = $logDiagnostic;
 
         return $this;
-    }
-
-    /**
-     * Checks if the Monolog library version is API version 3 or above.
-     *
-     * @return bool Returns true if the Monolog library version is API version 3 or above, false otherwise.
-     */
-    private function isApiMonologV3()
-    {
-        return version_compare(\Monolog\Logger::API, '3', '>=');
     }
 }

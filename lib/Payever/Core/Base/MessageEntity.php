@@ -13,7 +13,6 @@
 
 namespace Payever\Sdk\Core\Base;
 
-use Exception;
 use Payever\Sdk\Core\Helper\StringHelper;
 
 /**
@@ -63,7 +62,7 @@ abstract class MessageEntity implements MessageEntityInterface, \ArrayAccess
         if (JSON_ERROR_NONE !== json_last_error()) {
             $error = function_exists('json_last_error_msg') ? json_last_error_msg() : json_last_error();
 
-            throw new Exception('Json serialization error: ' . $error);
+            throw new \Exception('Json serialization error: ' . $error);
         }
 
         return $result;

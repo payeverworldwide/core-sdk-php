@@ -38,7 +38,7 @@ class RequestBuilder
     protected $params = [];
 
     /** @var string $protocolVersion */
-    protected $protocolVersion = CURL_HTTP_VERSION_1_1;
+    protected $protocolVersion = '1.1';
 
     /** @var RequestEntity $requestEntity */
     protected $requestEntity;

@@ -20,7 +20,6 @@ use Psr\Log\LogLevel;
 
 /**
  * Class Error
- * @todo Change properties to be the camel case style
  * @method string getId()
  * @method string getTimestamp()
  * @method string getCulprit()
@@ -30,8 +29,6 @@ use Psr\Log\LogLevel;
  * @method self setId(string $id)
  * @method self setTimestamp(string $id)
  * @method self setCulprit(string $id)
- * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Error extends ApmRequestEntity
 {
