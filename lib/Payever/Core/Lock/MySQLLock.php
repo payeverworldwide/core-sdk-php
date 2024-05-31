@@ -59,9 +59,13 @@ class MySQLLock implements LockInterface
      */
     public function releaseLock($lockName)
     {
-        $statement = "SELECT RELEASE_LOCK({$this->prepareLockName($lockName)})";
+        $statement = $this->pdo->prepare("SELECT RELEASE_LOCK(?)");
 
-        $this->pdo->exec($statement);
+        $statement->execute([
+            $this->prepareLockName($lockName)
+        ]);
+
+        $statement->fetch(\PDO::FETCH_NUM);
     }
 
     /**
@@ -70,18 +74,6 @@ class MySQLLock implements LockInterface
      */
     private function prepareLockName($lockName)
     {
-        return $this->pdo->quote("{$this->getCurrentDatabase()}.{$lockName}");
-    }
-
-    /**
-     * @return string|null
-     */
-    private function getCurrentDatabase()
-    {
-        if (null === $this->currentDatabase) {
-            $this->currentDatabase = $this->pdo->query('SELECT DATABASE()')->fetchColumn();
-        }
-
-        return $this->currentDatabase;
+        return $this->pdo->quote("{$lockName}");
     }
 }
