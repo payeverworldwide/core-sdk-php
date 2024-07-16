@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.0]
+### Added
+- Created helper for entities creation `DataHelper:getEntityInstance($data, $className)`
+
+### Changed
+- Minimal version of PHP - 5.6
+- `StringHelper::jsonDecode()` improved json decoding error handling
+- `StringHelper::jsonDecode()` changed behavior: it's the same behavior as `json_decode()`
+- `StringHelper::jsonDecode()` added additional parameters: `$object, $associative = null, $depth = 512, $flags = 0`
+
 ## [2.0.0]
 ### Added
 - `ApmProcessor` for apm logging using Monolog

@@ -17,15 +17,15 @@ namespace Payever\Sdk\Core;
 
 // @codeCoverageIgnoreStart
 // phpcs:disable PSR1.Files.SideEffects
-define('PEI_CORE_VERSION', '2.0.1');
+define('PEI_CORE_VERSION', '2.1.0');
 define('PEI_CORE_MAJOR_VERSION', 2);
-define('PEI_CORE_MINOR_VERSION', 0);
-define('PEI_CORE_RELEASE_VERSION', 1);
+define('PEI_CORE_MINOR_VERSION', 1);
+define('PEI_CORE_RELEASE_VERSION', 0);
 
 define('PEI_NAMESPACE', 'Payever\Sdk\Core');
 
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
-    throw new \RuntimeException('payever SDK requires PHP version 5.4 or higher.');
+if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+    throw new \RuntimeException('payever SDK requires PHP version 5.6 or higher.');
 }
 // @codeCoverageIgnoreEnd
 // phpcs:enable PSR1.Files.SideEffects

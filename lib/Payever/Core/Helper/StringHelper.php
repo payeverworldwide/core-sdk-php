@@ -54,31 +54,32 @@ class StringHelper
     /**
      * Returns decoded JSON
      *
+     * @see json_decode()
      * @param array|object|\stdClass|string $object
+     * @param bool|null $associative
+     * @param int $depth [optional]
+     * @param int $flags [optional]
      *
      * @return bool|mixed
      * @throws \UnexpectedValueException
      */
-    public static function jsonDecode($object)
+    public static function jsonDecode($object, $associative = null, $depth = 512, $flags = 0)
     {
         if (!is_string($object)) {
             return $object;
         }
 
-        $result = json_decode($object);
-        if (function_exists('json_last_error')) {
-            if (json_last_error() != JSON_ERROR_NONE) {
-                throw new \UnexpectedValueException(
-                    'JSON Decode Error: ' . json_last_error(),
-                    json_last_error()
-                );
-            }
+        $result = json_decode($object, $associative, $depth, $flags);
+        $lastError = json_last_error();
+        if ($lastError !== JSON_ERROR_NONE) {
+            $errorMessage = function_exists('json_last_error_msg') ? json_last_error_msg() : $lastError;
+
+            throw new \UnexpectedValueException(
+                'JSON Decode Error: ' . $errorMessage,
+                $lastError
+            );
         }
 
-        if (!empty($result)) {
-            return $result;
-        }
-
-        return false;
+        return $result;
     }
 }

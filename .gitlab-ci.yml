@@ -12,9 +12,13 @@ release_github:
   only:
     - tags
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php8.0-cli-xdebug:0.0.1
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   script:
+    - command -v git >/dev/null 2>&1 || { echo >&2 "git could not be found"; exit 1; }
+    - command -v perl >/dev/null 2>&1 || { echo >&2 "perl could not be found"; exit 1; }
+    - command -v json_pp >/dev/null 2>&1 || { echo >&2 "json_pp could not be found"; exit 1; }
+    - git config --global --add safe.directory /builds/plugins/sdk/core
     - GITLAB_TAG=`git describe --tags`
 
     - GITHUB_LOCAL_REPO_TMP=~/github_tmp
@@ -67,7 +71,7 @@ test_build:
   stage: test_build
   tags: [sf_test]
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.0
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   cache:
     key: test_${CI_COMMIT_REF_SLUG}
@@ -84,7 +88,7 @@ test_version:
   stage: test
   tags: [sf_test]
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.0
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   only:
     variables:
@@ -99,7 +103,7 @@ test_phpcs:
   stage: test
   tags: [sf_test]
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.0
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   cache:
     key: test_${CI_COMMIT_REF_SLUG}
@@ -117,7 +121,7 @@ test_phpmd:
   stage: test
   tags: [sf_test]
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.0
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   cache:
     key: test_${CI_COMMIT_REF_SLUG}
@@ -164,7 +168,7 @@ unit:php5.6:
 unit:php7.3:
   extends: .unit:base
   image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.0
+    name: payeverk8sregistry.azurecr.io/plugins/ci/php7.3-cli:2.0.2
     entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
   cache:
     key: test_unit_73_${CI_COMMIT_REF_SLUG}

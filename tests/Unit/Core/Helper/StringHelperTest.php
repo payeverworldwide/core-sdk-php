@@ -95,7 +95,7 @@ class StringHelperTest extends TestCase
             $this->expectException('Exception');
         }
 
-        $this->assertEquals($out, StringHelper::jsonDecode($in));
+        $this->assertEquals($out, StringHelper::jsonDecode($in, false));
     }
 
     /**
@@ -107,7 +107,6 @@ class StringHelperTest extends TestCase
             array('[1,2,\']', false, true),
             array('', false, true),
             array('[1,2,3]', array(1,2,3)),
-            array('[]', false),
             array(1, 1),
             array(null, null),
             array(false, false),
