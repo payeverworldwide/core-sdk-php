@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.0]
+### Changed
+- Changed CommonApiClient constructor parameters
+
 ## [2.1.0]
 ### Added
 - Created helper for entities creation `DataHelper:getEntityInstance($data, $className)`

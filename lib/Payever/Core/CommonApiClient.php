@@ -72,19 +72,20 @@ class CommonApiClient implements CommonApiClientInterface
 
     /**
      * @param ClientConfigurationInterface $clientConfiguration
-     * @param OauthTokenList $oauthTokenList
-     * @param HttpClientInterface $httpClient
+     * @param OauthTokenList|null $oauthTokenList
+     * @param HttpClientInterface|null $httpClient
      *
      * @throws \Exception
      */
     public function __construct(
         ClientConfigurationInterface $clientConfiguration,
-        OauthTokenList $oauthTokenList = null,
-        HttpClientInterface $httpClient = null
+        $oauthTokenList = null,
+        $httpClient = null
     ) {
         $this->configuration = $clientConfiguration;
-        $this->httpClient = $httpClient;
-        $this->loadTokens($oauthTokenList);
+        $httpClient && $this->setHttpClient($httpClient);
+
+        $this->loadTokens($oauthTokenList ?: new DummyOauthTokenList());
     }
 
     /**
@@ -292,16 +293,12 @@ class CommonApiClient implements CommonApiClientInterface
     /**
      * Loads Tokens
      *
-     * @param OauthTokenList|null $oauthTokenList
+     * @param OauthTokenList $oauthTokenList
      *
      * @return $this
      */
-    protected function loadTokens(OauthTokenList $oauthTokenList = null)
+    protected function loadTokens(OauthTokenList $oauthTokenList)
     {
-        if (is_null($oauthTokenList)) {
-            $oauthTokenList = new DummyOauthTokenList();
-        }
-
         $this->tokens = $oauthTokenList->load();
 
         return $this;
