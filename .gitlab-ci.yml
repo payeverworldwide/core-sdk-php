@@ -5,6 +5,9 @@ stages:
 
 before_script:
   - echo "machine gitlab.devpayever.com login $GITLAB_USER password $GITLAB_TOKEN" > ~/.netrc
+  - curl -sS https://getcomposer.org/download/2.2.24/composer.phar -o /tmp/composer2 && chmod +x /tmp/composer2
+  - export PATH="/tmp:$PATH"
+  - mv /tmp/composer2 /tmp/composer
 
 release_github:
   stage: release
@@ -81,8 +84,10 @@ test_build:
     - triggers
     - web
   script:
-    - echo $0
-    - composer install --no-interaction --optimize-autoloader --no-ansi
+    - echo "machine gitlab.devpayever.com login $GITLAB_USER password $GITLAB_TOKEN" > ~/.netrc
+    - curl -sS https://getcomposer.org/download/2.2.24/composer.phar -o /tmp/composer.phar
+    - php /tmp/composer.phar --version
+    - php /tmp/composer.phar install --no-interaction --optimize-autoloader --no-ansi
 
 test_version:
   stage: test
@@ -188,3 +193,4 @@ unit:php8.2:
       - vendor/
   variables:
     PHP_VERSION: '8.2'
+

@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.0]
+### Changed
+- Fixed log spam "Got new HTTP Client"
+
 ## [2.2.0]
 ### Changed
 - Changed CommonApiClient constructor parameters

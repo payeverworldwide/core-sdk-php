@@ -177,10 +177,6 @@ class CommonApiClient implements CommonApiClientInterface
      */
     public function setHttpClient(HttpClientInterface $httpClient)
     {
-        $this->configuration->getLogger()->debug(
-            sprintf('Got new HTTP Client: %s', get_class($httpClient))
-        );
-
         $this->httpClient = $httpClient;
 
         return $this;
