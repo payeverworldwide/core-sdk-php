@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.0]
+### Added
+- Implemented `fetchRequest` method in `CommonApiClient`
+- Implemented `fetch(RequestInterface $request)` in `CurlClient`
+- Added `fetch(RequestInterface $request)` in `HttpClientInterface`
+- Added `download($fileUrl, $savePath)` in `HttpClientInterface`
+### Changed
+- Removed PHP 5.6 support
+
 ## [2.3.0]
 ### Changed
 - Fixed log spam "Got new HTTP Client"

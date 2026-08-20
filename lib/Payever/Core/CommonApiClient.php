@@ -1,16 +1,12 @@
 <?php
 
 /**
- * PHP version 5.4 and 8
- *
  * @category  Core
  * @package   Payever\Core
  * @author    payever GmbH <service@payever.de>
- * @author    Andrey Puhovsky <a.puhovsky@gmail.com>
- * @author    Hennadii.Shymanskyi <gendosua@gmail.com>
- * @copyright 2017-2021 payever GmbH
+ * @copyright 2017-2026 payever GmbH
  * @license   MIT <https://opensource.org/licenses/MIT>
- * @link      https://docs.payever.org/shopsystems/api/getting-started
+ * @link      https://docs.payever.org/api
  */
 
 namespace Payever\Sdk\Core;
@@ -303,7 +299,7 @@ class CommonApiClient implements CommonApiClientInterface
     /**
      * Requests new oAuth OauthToken which will be used further
      *
-     * @link https://docs.payever.org/shopsystems/api/getting-started/authentication Documentation
+     * @link https://docs.payever.org/api
      *
      * @param string $scope Scope in which the token will be used
      *
@@ -383,6 +379,35 @@ class CommonApiClient implements CommonApiClientInterface
                 $request->addHeader($pieces[0], $pieces[1]);
 
                 return $this->getHttpClient()->execute($request);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Fetches the provided request using the HTTP client. If the request fails with a forbidden error code,
+     * it attempts to acquire a new authorization token and retry the request.
+     *
+     * @param Request $request The request to be fetched.
+     * @param string $scope Optional authorization scope, defaults to OauthToken::SCOPE_PAYMENT_ACTIONS.
+     *
+     * @return mixed The response from the HTTP client after fetching the request.
+     * @throws \Exception If an error occurs and it is not recoverable.
+     */
+    protected function fetchRequest($request, $scope = OauthToken::SCOPE_PAYMENT_ACTIONS)
+    {
+        try {
+            return $this->getHttpClient()->fetch($request);
+        } catch (\Exception $exception) {
+            if ($exception->getCode() === self::FORBIDDEN_ERROR_CODE) {
+                $this->getTokens()->clear()->save();
+
+                $newToken = $this->getToken($scope)->getAuthorizationString();
+                $pieces = explode(':', $newToken, 2);
+                $request->addHeader($pieces[0], $pieces[1]);
+
+                return $this->getHttpClient()->fetch($request);
             }
 
             throw $exception;

@@ -1,14 +1,12 @@
 <?php
 
 /**
- * PHP version 5.4 and 8
- *
  * @category  Http
  * @package   Payever\Core
  * @author    payever GmbH <service@payever.de>
- * @copyright 2017-2021 payever GmbH
+ * @copyright 2017-2026 payever GmbH
  * @license   MIT <https://opensource.org/licenses/MIT>
- * @link      https://docs.payever.org/shopsystems/api/getting-started
+ * @link      https://docs.payever.org/api
  */
 
 namespace Payever\Sdk\Core\Http\Client;
@@ -72,7 +70,36 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
     public function execute(RequestInterface $request)
     {
         try {
-            return $this->executeRequest($request);
+            return $this->executeRequest($request, false);
+        } catch (\Exception $exception) {
+            $logLevel = $this->logLevel;
+            if (null !== $this->tmpLogLevel) {
+                $logLevel = $this->tmpLogLevel;
+                $this->tmpLogLevel = null;
+            }
+            $this->logger->log(
+                $logLevel,
+                sprintf(
+                    'HTTP Request failed: %s %s',
+                    $exception->getCode(),
+                    $exception->getMessage()
+                ),
+                ['trace' => $exception->getTraceAsString()]
+            );
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return string
+     * @throws \Exception
+     */
+    public function fetch(RequestInterface $request)
+    {
+        try {
+            return $this->executeRequest($request, true);
         } catch (\Exception $exception) {
             $logLevel = $this->logLevel;
             if (null !== $this->tmpLogLevel) {
@@ -96,7 +123,7 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
     /**
      * @param RequestInterface $request
      *
-     * @return Response
+     * @return Response|string
      *
      * @throws \RuntimeException
      * @throws PayeverCommunicationException
@@ -105,7 +132,7 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ShortVariable)
      */
-    protected function executeRequest(RequestInterface $request)
+    protected function executeRequest(RequestInterface $request, $returnContent)
     {
         $this->logger->debug(
             sprintf('HTTP Request %s %s', $request->getMethod(), $request->getUrl()),
@@ -199,6 +226,11 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
             }
 
             throw new PayeverCommunicationException($message, $httpCode);
+        }
+
+        // Return raw response
+        if ($returnContent) {
+            return $result;
         }
 
         $response = new Response();

@@ -158,18 +158,6 @@ test_phpmd:
     - composer dump-autoload
     - ./vendor/bin/phpunit -c ./phpunit.xml
 
-unit:php5.6:
-  extends: .unit:base
-  image:
-    name: payeverk8sregistry.azurecr.io/plugins/ci/php5.6-cli:2.0.0
-    entrypoint: [ "/bin/sh", "-c", "/bin/bash" ]
-  cache:
-    key: test_unit_56_${CI_COMMIT_REF_SLUG}
-    paths:
-      - vendor/
-  variables:
-    PHP_VERSION: '5.6'
-
 unit:php7.3:
   extends: .unit:base
   image:

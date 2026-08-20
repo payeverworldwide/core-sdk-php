@@ -3,29 +3,27 @@
 /**
  * Class for Payever API Main Engine
  *
- * PHP version 5.4 and 8
- *
  * @category  API
  * @package   Payever\Core
  * @author    payever GmbH <service@payever.de>
- * @copyright 2017-2021 payever GmbH
+ * @copyright 2017-2026 payever GmbH
  * @license   MIT <https://opensource.org/licenses/MIT>
- * @link      https://docs.payever.org/shopsystems/api/getting-started
+ * @link      https://docs.payever.org/api
  */
 
 namespace Payever\Sdk\Core;
 
 // @codeCoverageIgnoreStart
 // phpcs:disable PSR1.Files.SideEffects
-define('PEI_CORE_VERSION', '2.3.0');
-define('PEI_CORE_MAJOR_VERSION', 2);
-define('PEI_CORE_MINOR_VERSION', 3);
+define('PEI_CORE_VERSION', '3.0.0');
+define('PEI_CORE_MAJOR_VERSION', 3);
+define('PEI_CORE_MINOR_VERSION', 0);
 define('PEI_CORE_RELEASE_VERSION', 0);
 
 define('PEI_NAMESPACE', 'Payever\Sdk\Core');
 
-if (version_compare(PHP_VERSION, '5.6.0', '<')) {
-    throw new \RuntimeException('payever SDK requires PHP version 5.6 or higher.');
+if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+    throw new \RuntimeException('payever SDK requires PHP version 7.0 or higher.');
 }
 // @codeCoverageIgnoreEnd
 // phpcs:enable PSR1.Files.SideEffects
