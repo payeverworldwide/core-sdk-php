@@ -1,5 +1,9 @@
 # Changelog
 
+## [3.0.1]
+### Changed
+- Fixed `curl_close()` is deprecated since 8.5
+
 ## [3.0.0]
 ### Added
 - Implemented `fetchRequest` method in `CommonApiClient`

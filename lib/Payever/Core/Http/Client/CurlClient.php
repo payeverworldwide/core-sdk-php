@@ -194,7 +194,9 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
         $errorMessage = curl_error($ch);
         $errorNumber  = curl_errno($ch);
 
-        curl_close($ch);
+        if (version_compare(phpversion(), '8.0.0', '<')) {
+            curl_close($ch);
+        }
 
         $this->logger->debug(
             sprintf('HTTP Response %s %s', $request->getMethod(), $request->getUrl()),
@@ -312,7 +314,10 @@ class CurlClient implements HttpClientInterface, LoggerAwareInterface
         $errorMessage = curl_error($ch);
         $errorNumber  = curl_errno($ch);
 
-        curl_close($ch);
+        if (version_compare(phpversion(), '8.0.0', '<')) {
+            curl_close($ch);
+        }
+
         fclose($filePointer);
 
         $this->logger->debug(
